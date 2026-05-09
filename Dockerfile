@@ -1,0 +1,1 @@
+FROM trampani/jobeinabox:latest
