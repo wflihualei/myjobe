@@ -2,7 +2,7 @@ name: Push Jobe to Aliyun
 
 on:
   push:
-    branches: [ "main" ]  # 当你往 main 分支提交代码时触发
+    branches: [ "main" ]
 
 jobs:
   build-and-push:
@@ -14,16 +14,15 @@ jobs:
     - name: Log in to Aliyun ACR
       uses: azure/docker-login@v1
       with:
-        # 这里替换成你图片里的那个长地址前缀（去掉最后的 /my-moodle/jobe）
         login-server: crpi-cyu7l7j5wn3960kl.cn-beijing.personal.cr.aliyuncs.com
         username: ${{ secrets.ALIVER_USERNAME }}
         password: ${{ secrets.ALIYUN_PASSWORD }}
 
     - name: Build and push
       run: |
-        # 拉取原镜像（GitHub 拉这个极快）
-        docker pull trampani/jobeinabox:latest
-        # 打标签
-        docker tag trampani/jobeinabox:latest crpi-cyu7l7j5wn3960kl.cn-beijing.personal.cr.aliyuncs.com/my-moodle/jobe:latest
+        # 拉取官方原镜像
+        docker pull trampgeek/jobeinabox:latest
+        # 重新打标签
+        docker tag trampgeek/jobeinabox:latest crpi-cyu7l7j5wn3960kl.cn-beijing.personal.cr.aliyuncs.com/my-moodle/jobe:latest
         # 推送到阿里云
         docker push crpi-cyu7l7j5wn3960kl.cn-beijing.personal.cr.aliyuncs.com/my-moodle/jobe:latest
